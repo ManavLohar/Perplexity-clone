@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   getMe,
   login,
+  logout,
   register,
   verifyEmail,
 } from "../controllers/auth.controller.js";
@@ -17,6 +18,7 @@ authRouter
   .post("/register", registerValidator, register)
   .get("/verify-email", verifyEmail)
   .post("/login", loginValidator, login)
-  .get("/get-me", authUser, getMe);
+  .get("/get-me", authUser, getMe)
+  .get("/logout", authUser, logout);
 
 export default authRouter;

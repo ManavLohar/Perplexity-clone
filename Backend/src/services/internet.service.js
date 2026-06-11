@@ -8,6 +8,5 @@ export const searchInternet = async ({ query }) => {
     maxResults: 5,
     searchDepth: "advanced",
   });
-
   return JSON.stringify(results);
 };

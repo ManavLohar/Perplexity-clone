@@ -16,7 +16,7 @@ const geminiModel = new ChatGoogleGenerativeAI({
 });
 
 const mistralModel = new ChatMistralAI({
-  model: "mistral-small-latest",
+  model: "mistral-medium-latest",
   apiKey: process.env.MISTRAL_API_KEY,
 });
 
@@ -31,6 +31,15 @@ const searchInternetTool = tool(searchInternet, {
 const agent = createAgent({
   model: mistralModel,
   tools: [searchInternetTool],
+  systemPrompt: `
+You are a web-grounded assistant.
+
+When a search tool is available:
+- Use it for factual questions.
+- Prefer tool results over your own knowledge.
+- Answer using the tool output.
+- If the tool provides information, do not ignore it.
+`,
 });
 
 export async function generateResponse(messages) {

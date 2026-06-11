@@ -153,3 +153,12 @@ export async function getMe(req, res) {
     user,
   });
 }
+
+export async function logout(req, res) {
+  const { email } = req.user;
+  res.clearCookie("token");
+  res.status(200).json({
+    message: "Logout successfully!",
+    success: true,
+  });
+}

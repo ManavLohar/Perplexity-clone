@@ -29,3 +29,11 @@ export async function getMe() {
     console.log(error.message);
   }
 }
+export async function logout() {
+  try {
+    const response = await api.get("/logout");
+    return response.data;
+  } catch (error) {
+    console.log(error.message);
+  }
+}

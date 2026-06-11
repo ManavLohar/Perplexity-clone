@@ -2,8 +2,10 @@ import React from "react";
 import { registerFormValidation } from "../../../schema/auth.schema";
 import { useFormik } from "formik";
 import { Link } from "react-router";
+import { useAuth } from "../hooks/useAuth";
 
 const Register = () => {
+  const { handleRegister } = useAuth();
   const initialState = {
     username: "",
     email: "",
@@ -22,6 +24,7 @@ const Register = () => {
     initialValues: initialState,
     validationSchema: registerFormValidation,
     onSubmit: (values) => {
+      handleRegister(values);
       console.log(values);
     },
   });
@@ -98,7 +101,10 @@ const Register = () => {
             Register
           </button>
           <p className="text-gray-300 text-sm">
-            Already have an account? <Link className="text-cyan-500" to={"/login"}>Login here</Link>
+            Already have an account?{" "}
+            <Link className="text-cyan-500" to={"/login"}>
+              Login here
+            </Link>
           </p>
         </form>
       </div>
