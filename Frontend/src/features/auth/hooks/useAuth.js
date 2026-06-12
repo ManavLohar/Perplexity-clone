@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { setError, setLoading, setUser } from "../auth.slice";
 import { getMe, login, logout, register } from "../services/auth.api";
+import toast from "react-hot-toast";
 
 export function useAuth() {
   const dispatch = useDispatch();
@@ -9,6 +10,7 @@ export function useAuth() {
     try {
       dispatch(setLoading(true));
       const data = await register({ username, email, password });
+      dispatch(setLoading(false));
     } catch (error) {
       dispatch(
         setError(error.response?.data?.message || "Registration failed!"),

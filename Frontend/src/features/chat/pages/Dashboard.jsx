@@ -10,6 +10,7 @@ import { SlNote } from "react-icons/sl";
 import { RiLoader2Fill } from "react-icons/ri";
 import Logout from "../../auth/components/Logout";
 import { setCurrentChatId } from "../chat.slice";
+import { FaBarsStaggered } from "react-icons/fa6";
 
 const Dashboard = () => {
   const { user } = useSelector((state) => state.auth);
@@ -27,6 +28,7 @@ const Dashboard = () => {
 
   const [chatInput, setChatInput] = useState("");
   const [isLogoutOpen, setIsLogoutOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const endOfMessagesRef = useRef(null);
   const messageCount = chats[currentChatId]?.messages?.length ?? 0;
@@ -91,37 +93,47 @@ const Dashboard = () => {
 
   return (
     <main className="h-screen w-full flex bg-neutral-800">
-      <div className="max-w-75 w-full p-4 border border-r-neutral-700 flex flex-col">
-        <h3 className="text-2xl font-semibold text-cyan-500">perplexity</h3>
-
-        <div className="flex flex-col gap-2 mt-2 text-white flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden">
-          <button
-            onClick={() => dispatch(setCurrentChatId(null))}
-            className="flex gap-2 items-center p-2 rounded-md text-sm text-left outline-none cursor-pointer hover:bg-neutral-700/60"
+      <div
+        className={`absolute flex flex-col justify-between transition-all bg-neutral-800 z-10 ${isSidebarOpen ? "left-0" : "-left-75"} h-full md:relative md:left-0 max-w-75 w-full p-4 border border-r-neutral-700 md:flex md:flex-col`}
+      >
+        <div>
+          <h3 className="text-2xl font-semibold text-cyan-500">perplexity</h3>
+          <h3
+            className="md:hidden absolute -right-10 top-5 text-white"
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
           >
-            <SlNote />
-            <p className="truncate">New Chat</p>
-          </button>
-          {Object.values(chats).length > 0 ? (
-            <p>Recent chats</p>
-          ) : (
-            <p>No chats</p>
-          )}
-          {Object.values(chats)
-            .sort((a, b) => new Date(b.lastUpdated) - new Date(a.lastUpdated))
-            .map((chat, index) => (
-              <button
-                onClick={() => openChat(chat.id)}
-                key={index}
-                className={`p-2 rounded-md text-sm text-left outline-none cursor-pointer ${currentChatId === chat.id ? "bg-neutral-700" : "hover:bg-neutral-700/60"}`}
-              >
-                <p className="truncate">{chat.title}</p>
-              </button>
-            ))}
+            <FaBarsStaggered size={25} />
+          </h3>
+
+          <div className="flex flex-col gap-2 mt-2 text-white flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden">
+            <button
+              onClick={() => dispatch(setCurrentChatId(null))}
+              className="flex gap-2 items-center p-2 rounded-md text-sm text-left outline-none cursor-pointer hover:bg-neutral-700/60"
+            >
+              <SlNote />
+              <p className="truncate">New Chat</p>
+            </button>
+            {Object.values(chats).length > 0 ? (
+              <p>Recent chats</p>
+            ) : (
+              <p>No chats</p>
+            )}
+            {Object.values(chats)
+              .sort((a, b) => new Date(b.lastUpdated) - new Date(a.lastUpdated))
+              .map((chat, index) => (
+                <button
+                  onClick={() => openChat(chat.id)}
+                  key={index}
+                  className={`p-2 rounded-md text-sm text-left outline-none cursor-pointer ${currentChatId === chat.id ? "bg-neutral-700" : "hover:bg-neutral-700/60"}`}
+                >
+                  <p className="truncate">{chat.title}</p>
+                </button>
+              ))}
+          </div>
         </div>
 
         {/* User short info at the bottom of the left chat history panel */}
-        <div className="mt-3 pt-3 border-t border-neutral-700 text-neutral-200 text-sm">
+        <div className="mt-3 sticky bottom-0 pt-3 border-t border-neutral-700 text-neutral-200 text-sm">
           {user ? (
             <div className="flex gap-2">
               <div className="min-w-full flex justify-between items-center">
@@ -149,10 +161,10 @@ const Dashboard = () => {
 
       <div className="flex-10 flex justify-center overflow-hidden">
         <div
-          className={`flex flex-col pt-4 relative max-w-200 min-w-100 w-full h-screen py-2`}
+          className={`flex flex-col pt-10 md:pt-4 relative max-w-200 w-full h-screen py-2`}
         >
           <div
-            className={`flex flex-col p-3 gap-4 w-full overflow-y-auto [&::-webkit-scrollbar]:hidden ${currentChatId && "flex-1"}`}
+            className={`flex flex-col p-3 gap-4 min-w-85 overflow-y-auto [&::-webkit-scrollbar]:hidden ${currentChatId && "flex-1"}`}
           >
             {chats[currentChatId]?.messages.map((message, index) => {
               return (
@@ -160,7 +172,7 @@ const Dashboard = () => {
                   key={index}
                   className={`flex p-2 rounded-md ${
                     message.role === "user"
-                      ? "ml-auto max-w-120 bg-neutral-700"
+                      ? "ml-auto min-w-80 max-w-120 bg-neutral-700"
                       : "mr-auto p-4 bg-neutral-900/30 border border-neutral-700"
                   }`}
                 >
@@ -188,9 +200,9 @@ const Dashboard = () => {
                 perplexity
               </h3>
             )}
-            <div className="w-full m-2 flex gap-2 relative">
+            <div className="relative flex min-w-85 w-full gap-2 px-3 py-2">
               <textarea
-                className="w-full px-4 py-4 text-white rounded-lg border bg-neutral-900 outline-none border-neutral-700"
+                className="w-full p-4 text-white rounded-lg border bg-neutral-900 outline-none border-neutral-700"
                 rows={currentChatId ? 2 : 4}
                 type="text"
                 placeholder="Ask what do you want?"
@@ -200,7 +212,7 @@ const Dashboard = () => {
               <button
                 disabled={isLoading}
                 onClick={handleSubmitMessage}
-                className="flex w-15 h-15 justify-center items-center text-white rounded-full cursor-pointer absolute right-0 top-0"
+                className="flex w-15 h-15 justify-center items-center text-white rounded-full cursor-pointer absolute right-3 top-2"
               >
                 {isLoading ? (
                   <RiLoader2Fill size={25} className="animate-spin" />

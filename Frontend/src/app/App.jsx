@@ -2,6 +2,7 @@ import { RouterProvider } from "react-router";
 import { router } from "./app.routes";
 import { useAuth } from "../features/auth/hooks/useAuth";
 import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const { handleGetMe } = useAuth();
@@ -11,6 +12,7 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
+      <Toaster />
     </>
   );
 }

@@ -39,7 +39,7 @@ const Login = () => {
 
   return (
     <section className="bg-zinc-950 min-h-screen flex justify-center items-center ">
-      <div className="flex flex-col gap-8 p-8 border border-gray-700 rounded-2xl min-w-96 bg-zinc-900/70">
+      <div className="flex flex-col gap-8 p-8 border border-gray-700 rounded-2xl min-w-85 bg-zinc-900/70">
         <div className="">
           <h3 className="text-cyan-500 text-2xl font-extrabold">
             Welcome Back
@@ -89,7 +89,11 @@ const Login = () => {
             type="submit"
             className="py-2 px-3 w-full bg-cyan-500 font-semibold rounded-md cursor-pointer"
           >
-            Login
+            {loading ? (
+              <p className="animate-spin w-6 h-6 relative mx-auto border-2 border-r-cyan-500 rounded-full border-black"></p>
+            ) : (
+              "Login"
+            )}
           </button>
           <p className="text-gray-300 text-sm">
             Don't have an account?{" "}
