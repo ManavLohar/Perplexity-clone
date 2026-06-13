@@ -16,9 +16,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: [
-      "https://perplexity-clone-d030vwp2a-manav-lohars-projects.vercel.app",
-    ],
+    origin: ["https://perplexity-clone-bice.vercel.app"],
     credentials: true,
   }),
 );
