@@ -17,7 +17,7 @@ const Dashboard = () => {
   const dispatch = useDispatch();
 
   const {
-    initializeSocketConnection,
+    // initializeSocketConnection,
     handleSendMessage,
     handleGetChats,
     handleOpenChat,
