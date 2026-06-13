@@ -33,7 +33,7 @@ export async function register(req, res) {
             <p>Hi ${username},</p>
             <p>Thank you for registering at <strong>Perplexity</strong>. We're excited to have you on board!</p>
             <p>Please verify your email address by clicking the link below:</p>
-            <a href="http://localhost:3000/api/auth/verify-email?token=${emailVerificationToken}">Verify Email</a>
+            <a href="https://perplexity-clone-bice.vercel.app/api/auth/verify-email?token=${emailVerificationToken}">Verify Email</a>
             <p>If you did not create an account, please ignore!</p>
             <p>Best regards,<br>The Perplexity Team</p>
     `,
@@ -70,7 +70,7 @@ export async function verifyEmail(req, res) {
     res.send(`
         <h1>Email Verified Successfully</h1>
         <p>Your email has been verified. You can now log in to your account.</p>
-        <a href="http://localhost:3000/login">Go to Login</a>
+        <a href="https://perplexity-clone-bice.vercel.app/api/auth/login">Go to Login</a>
     `);
   } catch (error) {
     return res.status(400).json({
