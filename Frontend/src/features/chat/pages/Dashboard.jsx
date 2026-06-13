@@ -34,7 +34,7 @@ const Dashboard = () => {
   const messageCount = chats[currentChatId]?.messages?.length ?? 0;
 
   useEffect(() => {
-    initializeSocketConnection();
+    // initializeSocketConnection();
     handleGetChats();
     if (currentChatId) {
       handleOpenChat(currentChatId, chats);
