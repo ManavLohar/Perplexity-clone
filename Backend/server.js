@@ -6,13 +6,15 @@ import { initSocket } from "./src/sockets/server.socket.js";
 
 const PORT = process.env.PORT;
 const httpServer = createServer(app);
-initSocket(httpServer);
+// initSocket(httpServer);
 
 connectDB().catch((err) => {
   console.error("MongoDB connection error: ", err);
   process.exit(1);
 });
 
-httpServer.listen(PORT, () => {
-  console.log("Server started on port", PORT);
-});
+// app.listen(PORT, () => {
+//   console.log("Server started on port", PORT);
+// });
+
+export default app;
