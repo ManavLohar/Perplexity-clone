@@ -70,7 +70,7 @@ export async function verifyEmail(req, res) {
     res.send(`
         <h1>Email Verified Successfully</h1>
         <p>Your email has been verified. You can now log in to your account.</p>
-        <a href="https://perplexity-clone-bice.vercel.app/api/auth/login">Go to Login</a>
+        <a href="https://perplexity-clone-bice.vercel.app/login">Go to Login</a>
     `);
   } catch (error) {
     return res.status(400).json({
