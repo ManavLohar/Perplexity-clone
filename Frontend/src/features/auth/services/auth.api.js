@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 
 const api = axios.create({
   // baseURL: "http://localhost:3000/api/auth",
-  baseURL: "https://perplexity-clone-d030vwp2a-manav-lohars-projects.vercel.app/api/auth",
+  baseURL: "https://perplexity-clone-bice.vercel.app/api/auth",
   withCredentials: true,
 });
 

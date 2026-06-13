@@ -2,8 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   // baseURL: "http://localhost:3000/api/chats",
-  baseURL:
-    "https://perplexity-clone-d030vwp2a-manav-lohars-projects.vercel.app/api/chats",
+  baseURL: "https://perplexity-clone-bice.vercel.app/api/chats",
   withCredentials: true,
 });
 
