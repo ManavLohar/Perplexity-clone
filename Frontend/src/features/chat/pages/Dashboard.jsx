@@ -94,7 +94,7 @@ const Dashboard = () => {
   return (
     <main className="h-screen w-full flex bg-neutral-800">
       <div
-        className={`absolute flex flex-col justify-between transition-all bg-neutral-800 z-10 ${isSidebarOpen ? "left-0" : "-left-75"} h-full md:relative md:left-0 max-w-75 w-full p-4 border border-r-neutral-700 md:flex md:flex-col`}
+        className={`absolute flex flex-col justify-between transition-all bg-neutral-800 z-10 ${isSidebarOpen ? "left-0" : "-left-75"} h-screen md:relative md:left-0 max-w-75 w-full p-4 border border-r-neutral-700 md:flex md:flex-col`}
       >
         <div>
           <h3 className="text-2xl font-semibold text-cyan-500">perplexity</h3>

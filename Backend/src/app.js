@@ -16,7 +16,10 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: ["https://perplexity-clone-bice.vercel.app"],
+    origin: [
+      "https://perplexity-clone-bice.vercel.app",
+      "http://localhost:5173",
+    ],
     credentials: true,
   }),
 );
