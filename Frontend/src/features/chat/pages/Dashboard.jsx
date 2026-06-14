@@ -62,30 +62,65 @@ const Dashboard = () => {
   const markdownComponents = useMemo(
     () => ({
       p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+
       ul: ({ children }) => <ul className="mb-2 list-disc pl-5">{children}</ul>,
+
       ol: ({ children }) => (
         <ol className="mb-2 list-decimal pl-5">{children}</ol>
       ),
+
       blockquote: ({ children }) => (
         <blockquote className="my-2 border-l-4 border-neutral-600 bg-white/5 px-3 py-1 rounded-r-md">
           {children}
         </blockquote>
       ),
+
       hr: () => <hr className="my-3 border-neutral-700" />,
+
       code: ({ inline, children }) => {
         if (inline) {
           return (
-            <code className="rounded bg-white/10 px-1 py-0.5 text-[0.95em]">
+            <code className="rounded bg-white/10 px-1 py-0.5 text-[0.95em] break-all">
               {children}
             </code>
           );
         }
+
         return <code>{children}</code>;
       },
+
       pre: ({ children }) => (
-        <pre className="mb-2 overflow-x-auto max-w-full whitespace-pre-wrap rounded-xl bg-black p-3 border border-neutral-800">
+        <pre className="mb-2 overflow-x-auto max-w-full rounded-xl bg-black p-3 border border-neutral-800">
           {children}
         </pre>
+      ),
+
+      table: ({ children }) => (
+        <div className="my-3 w-full overflow-x-auto rounded-lg border border-neutral-700">
+          <table className="w-max min-w-full border-collapse">{children}</table>
+        </div>
+      ),
+
+      thead: ({ children }) => (
+        <thead className="bg-neutral-800">{children}</thead>
+      ),
+
+      tbody: ({ children }) => <tbody>{children}</tbody>,
+
+      tr: ({ children }) => (
+        <tr className="border-b border-neutral-700">{children}</tr>
+      ),
+
+      th: ({ children }) => (
+        <th className="border border-neutral-700 px-3 py-2 text-left font-semibold whitespace-nowrap">
+          {children}
+        </th>
+      ),
+
+      td: ({ children }) => (
+        <td className="border border-neutral-700 px-3 py-2 break-words max-w-[250px]">
+          {children}
+        </td>
       ),
     }),
     [],
@@ -94,7 +129,7 @@ const Dashboard = () => {
   return (
     <main className="h-screen w-full flex bg-neutral-800">
       <div
-        className={`absolute flex flex-col justify-between transition-all bg-neutral-800 z-10 ${isSidebarOpen ? "left-0" : "-left-75"} h-screen md:relative md:left-0 max-w-75 w-full p-4 border border-r-neutral-700 md:flex md:flex-col`}
+        className={`absolute flex flex-col justify-between transition-all duration-400 bg-neutral-800 z-10 ${isSidebarOpen ? "left-0" : "-left-75"} h-screen md:relative md:left-0 max-w-75 w-full p-4 border border-r-neutral-700 md:flex md:flex-col`}
       >
         <div>
           <h3 className="text-2xl font-semibold text-cyan-500">perplexity</h3>
@@ -122,7 +157,10 @@ const Dashboard = () => {
               .sort((a, b) => new Date(b.lastUpdated) - new Date(a.lastUpdated))
               .map((chat, index) => (
                 <button
-                  onClick={() => openChat(chat.id)}
+                  onClick={() => {
+                    openChat(chat.id);
+                    setIsSidebarOpen(false);
+                  }}
                   key={index}
                   className={`p-2 rounded-md text-sm text-left outline-none cursor-pointer ${currentChatId === chat.id ? "bg-neutral-700" : "hover:bg-neutral-700/60"}`}
                 >
@@ -173,7 +211,7 @@ const Dashboard = () => {
                   className={`flex p-2 rounded-md ${
                     message.role === "user"
                       ? "ml-auto min-w-80 max-w-120 bg-neutral-700"
-                      : "mr-auto p-4 bg-neutral-900/30 border border-neutral-700"
+                      : "mr-auto p-4 max-w-full bg-neutral-900/30 border border-neutral-700"
                   }`}
                 >
                   <div className="text-white w-full">
@@ -202,7 +240,7 @@ const Dashboard = () => {
             )}
             <div className="relative flex min-w-85 w-full gap-2 px-3 py-2">
               <textarea
-                className="w-full p-4 text-white rounded-lg border bg-neutral-900 outline-none border-neutral-700"
+                className="w-full p-4 pr-12 text-white rounded-lg border bg-neutral-900 outline-none border-neutral-700"
                 rows={currentChatId ? 2 : 4}
                 type="text"
                 placeholder="Ask what do you want?"
